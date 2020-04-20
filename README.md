@@ -9,7 +9,7 @@ To obtain the analysis used in the paper, one should execute ``jupyter notebook`
 
 This replication package contains three folders (i.e scripts, notebooks and data).
 - script: contains all scripts needed to pull images, inspect DockerHub API, extract Debian bugs, etc.
-- data.zip: should be unzipped. The folder data inside contains all datasets needed for the analysis and prepared before. To download this dataset, please use this zenodo repository: https://zenodo.org/record/3568161.
+- data.zip: should be unzipped. The folder data inside contains all datasets needed for the analysis and prepared before. To download this dataset, please use this zenodo repository: https://doi.org/10.5281/zenodo.3568160
 - notebooks: contains notebooks where we prepare and analyze data. If you are more specifically interested in the empirical analysis you can find it in the folder ``3 - Analysis of Debian-based Docker images``. All data is already provided in data.zip
 
 The data is under the Creative Commons Attribution Share-Alike 4.0 license.
