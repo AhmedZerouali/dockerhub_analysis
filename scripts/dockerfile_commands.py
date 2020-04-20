@@ -250,4 +250,4 @@ if __name__ == "__main__":
 	pool.close()
 	pool.join()
 
-	tab.to_csv('../data/for_analysis/commands_all_images.csv', index=False)
+	tab.to_csv('../data/for_analysis/image_dockerfile_commands.csv', index=False)
