@@ -28,12 +28,11 @@ def parse(f,url,slug):
 		f.write(line+'\n')
 
 def store():
-	images=pd.read_csv('../csv/official_images.csv', sep=',', dtype=object, index_col=None,  usecols=['slug','publisher'], error_bad_lines=False)
-	f=open('../csv/official_tags.csv','w')
+	images=pd.read_csv('../data/images_tags/official_images.csv', sep=',', dtype=object, index_col=None,  usecols=['slug','publisher'], error_bad_lines=False)
+	f=open('../data/images_tags/official_tags.csv','w')
 	images = images.query('publisher == "Docker"')
 
 	for index, row in enumerate(images.iterrows()):
-		print('store',index)
 		slug=row[1]['slug']
 		page = 1
 		while(True):
@@ -47,27 +46,19 @@ def store():
 	f.close()
 
 def community():
-	images=pd.read_csv('../csv/community_images.csv', sep=',', dtype=object, index_col=None, error_bad_lines=False)
+	images=pd.read_csv('../data/images_tags/community_images.csv', sep=',', dtype=object, index_col=None, error_bad_lines=False)
 	images['popularity'] = images['popularity'].apply(int)
 	images.sort_values('popularity', ascending=False, inplace=True)
 	images = images.groupby('slug').first().reset_index()
-	print(len(images))
-	f=open('../csv/community_tags.csv','a')
+	f=open('../data/images_tags/community_tags.csv','a')
 
 	for index, row in enumerate(images.iterrows()):
-		print('community', index)
-		# if index<895:
-		# 	continue
 		slug=row[1]['slug']
-		#page = 1
-		#while(True):
 		url="https://registry.hub.docker.com/v2/repositories/"+str(slug)+"/tags/?page=1&page_size=100"
 		try:
 			parse(f,url,slug)
 		except:
 			pass
-			#page = page +1
-
 	f.close()
 
 store()

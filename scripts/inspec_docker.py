@@ -3,7 +3,9 @@ import urllib
 import json
 import multiprocessing as mp
 import pandas as pd
+import os
 
+# This script inspect DockerHub API and gets the layers of DockerHub images and then save the output as a json file
 
 def get_token(image,tag):
     url = "https://auth.docker.io/token?scope=repository:"+str(image)+":pull&service=registry.docker.io"
@@ -30,16 +32,15 @@ def inspect(liste):
 		manifest = json.loads(get_manifest(image,tag,token))
 
 		if manifest['layers']:
-			with open('./layers_community/'+image.replace('/',':')+':'+tag, 'w') as json_file:  
+			with open('../data/layers_community/'+image.replace('/',':')+':'+tag, 'w') as json_file:  
 				json.dump(manifest['layers'], json_file )
 	except:
 		pass
 	    
 
-if __name__ == '__main__':
-	images=pd.read_csv('../data/images_tags/community_tags.csv', sep=',', dtype=object, 
-		#nrows=5000, 
-		index_col=None, error_bad_lines=False)
+def main():
+	images=pd.read_csv('../data/images_tags/community_tags.csv')
+
 	images = images[['slug','tag']]
 	images.sort_values('slug', inplace = True)
 	images.drop_duplicates(inplace = True)
@@ -47,11 +48,14 @@ if __name__ == '__main__':
 	# create tasks
 	images=images.values.tolist()
 
-	print(len(images))
-
 	 # MUlti processing
 	pool= mp.Pool(processes=24)
 	results=pool.imap_unordered(inspect,images, 100)
 
 	pool.close()
 	pool.join()
+
+if __name__ == '__main__':
+	# You should create a folder where to store the output first
+	os.system('mkdir ../data/layers_community/') # do the same for official images
+	main()

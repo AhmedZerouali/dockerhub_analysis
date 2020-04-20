@@ -1,7 +1,9 @@
-########## HERE WE EXTRACT BUGS FROM UDD ###############
 import psycopg2
 import pandas as pd
 from tqdm import tqdm
+
+# This script is used to extract package bugs from UDD, it is taken from https://github.com/neglectos/ConPan
+
 
 def connexion_udd():
         conn_string="host='udd-mirror.debian.net' port='5432' dbname='udd' user='udd-mirror' password='udd-mirror'"

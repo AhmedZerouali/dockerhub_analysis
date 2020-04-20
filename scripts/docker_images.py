@@ -4,7 +4,7 @@ from pprint import pprint
 import codecs
 import urllib.request
 
-# This script returns all image repositories found in DockerHub
+# This script yields all image repositories found in DockerHub
 
 
 def download(url):
@@ -22,7 +22,6 @@ def download(url):
 def parse(f,url):
 	data = json.loads(download(url))
 	#try:
-	print(len(data['summaries']))
 	for element in data['summaries']:
 		name=str(element['name'])
 		slug=str(element['slug'])
@@ -71,21 +70,19 @@ def parse2(f,url):
 		f.write(line+'\n')
 
 
-def store():
-	f=open('../csv/official_images_3d_try.csv','w')
+def official():
+	f=open('../data/images_tags/official_images.csv','w')
 	for count in range(1,6):
-		print(count)
 		url="https://store.docker.com/api/content/v1/products/search/?q=+&type=image&page="+str(count)+"&page_size=100"
 		parse(f,url)
 	f.close()
 
 def community():
 	# In case you just want a huge number of repositories
-	f=open('../csv/community_images.csv','a')
+	f=open('../data/images_tags/community_images.csv','a')
 	for c1 in 'qrstvwxz0123456789':
 		for c2 in 'aeiouybcdfghjklmnpqrstvwxz0123456789':
 			for count in range(1,101):
-				print(c1+c2,count)
 
 				url="https://store.docker.com/api/content/v1/products/search?q="+c1+c2+"&source=community&type=image&page="+str(count)+"&page_size=100"
 				try:
@@ -104,7 +101,7 @@ def parse_number(url):
 
 def community2():
 	# In case you want ALMOST ALL repositories
-	f=open('../csv/community_images.csv','a')
+	f=open('../data/images_tags/community_images.csv','a')
 	for c1 in 'rstvwxz0123456789':
 		for numero, c2 in enumerate('aeiouybcdfghjklmnpqrstvwxz0123456789'):
 			if c1 == 'r' and numero <18:
@@ -114,7 +111,6 @@ def community2():
 			if number >10000:
 				for c3 in 'aeiouybcdfghjklmnpqrstvwxz0123456789':
 					for count in range(1,101):
-						print(c1+c2+c3,count)
 
 						url="https://store.docker.com/api/content/v1/products/search?q="+c1+c2+c3+"&source=community&type=image&page="+str(count)+"&page_size=100"
 						try:
@@ -127,5 +123,6 @@ def community2():
 
 	f.close()
 
-
-community2()
+if __name__ == "__main__":
+	official()
+	community2()

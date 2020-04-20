@@ -5,17 +5,13 @@ import subprocess
 import pandas as pd
 import multiprocessing as mp
 
-# get packages and their versions found installed in countainers; from "dpkg -l" files
+# get packages and their versions found installed in countainers; from "dpkg -l" and release files
 
 def parse_packages(lista):
     columns=['name','package','version']
     data = pd.DataFrame(columns=columns)
-    print(len(lista))
     for index, dir, file in lista:
-        # if index ==100:
-        #     break
-        print(index,file)
-        command_package="grep ^ii "+dir+file # sed 's/  */ /g' | 
+        command_package="grep ^ii "+dir+file 
 
         proc = subprocess.Popen(command_package, stdout=subprocess.PIPE, shell=True)
         lines = list(filter(lambda x:len(x)>0,(line.strip().decode('utf-8') for line in proc.stdout)))
@@ -35,9 +31,6 @@ def parse_releases(lista):
     releases=[]
     files=[]
     for index, dir, file in lista:
-        # if index ==100:
-        #     break
-        print(index,file)
         with open(dir+file) as lines:
             for line in lines.readlines():
                 release=line.strip('\n')
@@ -51,7 +44,8 @@ def listdir_fullpath(dir):
     return [[i,dir,f] for i, f in enumerate(os.listdir(dir))]
 
 def main():
-    dirs = ['../containers_pulled/official/','../containers_pulled/community/part2/']#'../containers_pulled/community/part1/']
+    dirs = ['../data/official/','../data/community/']
+    types = ['official','community']
 
     for i, dir in enumerate(dirs):
         dir=dir + 'packages/'
@@ -65,11 +59,10 @@ def main():
         packages = pd.DataFrame(columns=columns)
         for res in results:
             packages = packages.append(res)
-        packages.to_csv('../csv/list_pkgs_rels/packages.csv_'+str(i), index=False)
+        packages.to_csv('../csv/list_pkgs_rels/'+types[i]+'_packages.csv', index=False)
 
     for i, dir in enumerate(dirs):
         dir=dir + 'releases/'
-        print(dir)
         list_dirs = listdir_fullpath(dir)
         chunks = [list_dirs[x:x+1000] for x in range(0, len(list_dirs), 1000)]
         pool= mp.Pool(processes=24)
@@ -80,7 +73,7 @@ def main():
         releases = pd.DataFrame(columns=columns)
         for res in results:
             releases = releases.append(res)
-        releases.to_csv('../csv/list_pkgs_rels/releases.csv_'+str(i), index=False)
+        releases.to_csv('../csv/list_pkgs_rels/'+types[i]+'/_releases.csv', index=False)
 
 
 if __name__ == "__main__":
