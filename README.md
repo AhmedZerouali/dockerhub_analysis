@@ -1,4 +1,7 @@
 # Debian-based Docker image analysis
+
+[![DOI](https://zenodo.org/badge/221498646.svg)](https://zenodo.org/badge/latestdoi/221498646)
+
 This repository represents a replication package for our analysis on Debian-based Docker images.
 
 This replication package requires Python 3.5+ to be installed, and all the dependencies listed in ``requirements.txt``.
