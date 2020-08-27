@@ -7,7 +7,8 @@ This repository represents a replication package for our analysis on Debian-base
 ```
 Title of the study: ``A multi-dimensional analysis of technical lag in Debian-based Docker images"
 
-Authors :  Ahmed Zerouali (VUB, UMONS), Tom Mens (UMONS), Alexandre Decan (UMONS), Jesus Gonzalez-Barahona (URJC) and Gregorio Robles (URJC).
+Authors :  Ahmed Zerouali (VUB, UMONS), Tom Mens (UMONS), Alexandre Decan (UMONS), 
+           Jesus Gonzalez-Barahona (URJC) and Gregorio Robles (URJC).
 
 Journal: Empirical Software Engineering 
 ```
