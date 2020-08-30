@@ -4,6 +4,14 @@
 
 This repository represents a replication package for our analysis on Debian-based Docker images.
 
+```
+Title of the study: ``A multi-dimensional analysis of technical lag in Debian-based Docker images"
+
+Authors :  Ahmed Zerouali (VUB, UMONS), Tom Mens (UMONS), Alexandre Decan (UMONS), 
+           Jesus Gonzalez-Barahona (URJC) and Gregorio Robles (URJC).
+
+Journal: Empirical Software Engineering 
+```
 This replication package requires Python 3.5+ to be installed, and all the dependencies listed in ``requirements.txt``.
 They can be automatically installed using ``pip install -r requirements.txt``. 
 These experiments were executed on a Linux Ubuntu OS.
